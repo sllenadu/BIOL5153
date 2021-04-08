@@ -20,7 +20,8 @@ parser.add_argument("fasta", help='name of the FASTA file')
 
 # parse the arguments
 args = parser.parse_args()
-print(args.gff)
+#print(args.gff)
+#print(args.fasta)
 
 
 #make sure you have the link or files in the same directory as you save your scripts. YOu can link
@@ -37,30 +38,30 @@ fasta_input = 'watermelon.fsa'
     #for line in gff_in:
         #columns = line.split('\t') #split columns based on tab delimtter
         # for CSV files using (',') is insufficient. You can use athe csv package for this
-        #print(columns[3], columns[4]) #grabbing hte columns we needed
+        #print(columns[3], columns[4]) #grabbing the columns we needed
 
 # read in FASTA file 
 genome = SeqIO.read(args.fasta, 'fasta')
-print(genome.id)
-print(len(genome.seq))
+#print(genome.id)
+#print(len(genome.seq))
 
 
 # create csv reader object 
 with open(args.gff, 'r') as gff_in:
     reader = csv.reader(gff_in, delimiter='\t')
-    for line in reader: # loop over al the lines in the reader object ie; parsed file
+    for line in reader: # loop over all lines in the reader object ie; parsed file
         # for CSV files using (',') is insufficient. You can use athe csv package for this
-        start = line[3]
-        end = line[4]
-        strand = line[6]
-        #print(start)
-        #print(line) #makes a list out of the fields
-        #print(line[3], line[4]) #grabbing the columns we needed
+        start = int(line[3])-1 # use column 3, python indexing considers the first integer as 0 therefore, substract by 1
+        end = int(line[4]) 
+        desc = line[-1]
+        
         
         # extract the sequence
-        print(len(genome.seq))
-       
-
+        print(">"+genome.id , desc)
+        print(genome.seq[start:end])
+        print()
+        
+        
 
 # parse the GFF file
 
