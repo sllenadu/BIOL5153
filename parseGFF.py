@@ -52,13 +52,17 @@ with open(args.gff, 'r') as gff_in:
     for line in reader: # loop over all lines in the reader object ie; parsed file
         # for CSV files using (',') is insufficient. You can use athe csv package for this
         start = int(line[3])-1 # use column 3, python indexing considers the first integer as 0 therefore, substract by 1
-        end = int(line[4]) 
+        end = int(line[4])
+        strand = line[6]
         desc = line[-1]
         
         
         # extract the sequence
         print(">"+genome.id , desc)
-        print(genome.seq[start:end])
+        if strand =="-":
+            print(genome.seq[start:end].reverse_complement())
+        else:
+            print(genome.seq[start:end])
         print()
         
         
