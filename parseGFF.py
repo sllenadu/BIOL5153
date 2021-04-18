@@ -7,6 +7,10 @@ import csv
 import argparse
 from Bio import SeqIO # importing SeqIO (is a command) in biopython 
 
+# declaring rev_comp function
+def rev_comp(sequence):
+    print(sequence.reverse_complement())
+
 
 # this script will parse a GFF file and extract each feature from the genome
 # inputs: 1) GFF file 2) corressponding genome sequence (FASTA format)
@@ -60,7 +64,7 @@ with open(args.gff, 'r') as gff_in:
         # extract the sequence
         print(">"+genome.id , desc)
         if strand =="-":
-            print(genome.seq[start:end].reverse_complement())
+            rev_comp(genome.seq[start:end])
         else:
             print(genome.seq[start:end])
         print()
